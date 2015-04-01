@@ -1,28 +1,40 @@
-<?php include 'includes/connection/session.php'; ?>
-<html>
+<?php
+include 'includes/connection/session.php';
+?>
+<html ng-app="myAdminApp" xmlns="http://www.w3.org/1999/html">
 	<head>
-	      <meta charset="utf-8">
+		<meta charset="utf-8">
 
-	      <title>ESN - Survival Guide</title>
+		<title>ESN - Survival Guide</title>
 
-	      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	      <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
 
-	      <link rel="shortcut icon" href="css/img/logo.ico" type="image/vnd.microsoft.icon" />
+		<link rel="shortcut icon" href="css/img/logo.ico" type="image/vnd.microsoft.icon" />
 
-	      <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 
-	      <link href="css/bootstrap.min.css" rel="stylesheet">
-	      <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-	      <link href="css/font-awesome.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="css/font-awesome.css" rel="stylesheet">
 
-	      <link href="css/pages/signin.css" rel="stylesheet">
-	      <link href="css/pages/dashboard.css" rel="stylesheet">
+		<link href="css/pages/signin.css" rel="stylesheet">
+		<link href="css/pages/dashboard.css" rel="stylesheet">
 
-	      <link href="css/style.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
 
-	      <script src="js/jquery-1.7.2.min.js"></script> 
-	      <script src="js/bootstrap.js"></script>
+        	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="js/jquery-1.7.2.min.js"></script>
+		      
+       		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/ckeditor/ckeditor.js"></script>
+
+		<script src="js/angularApp/app.js"></script>
+		<script src="js/angularApp/controllers.js"></script>
+		<script src="js/angularApp/services.js"></script>
+		<script src="js/ng-ckeditor.js"></script>
+        <script src="js/bootstrap.js"></script>
+
 	</head>
 
 	<body>
@@ -37,5 +49,100 @@
 				</div>
 			</div>
 		</div>
+		<div ng-controller="categoriesController">
+	<div class = "main-inner">
+		<div class="container"</div>
+			<div class="span5">
+				<div class="widget">
+					<div class="widget-header"> 
+						<i class="icon-book"></i>
+						<h3>Menu List Tree</h3>
+						<span>							
+							<a href="#Add" role="button" data-toggle="modal" style="margin-bottom : 15px;">
+							<button type="button" class="btn btn-default">Add Category</button></a>				
+						</span>
+					</div>
+					<div class="widget-content">
+						<ul ng-repeat="categorie in categories | orderBy:'+position'">
+							<a class="categorie"><li ng-click="getCategorie(categorie.id);">{{categorie.name}}</li></a>
+							<ul ng-repeat="categorie2 in categorie.categories | orderBy:'+position'">
+                                <a class="categorie"><li ng-click="getCategorie(categorie2.id);">{{categorie2.name}}</li></a>
+                                <ul ng-repeat="categorie3 in categorie2.categories | orderBy:'+position'">
+                                    <a class="categorie"><li ng-click="getCategorie(categorie3.id);">{{categorie3.name}}</li></a>
+                                </ul>
+							</ul>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="span5">
+				<div class="widget">
+					<form name="form" method="post" action="saveCategory.php">
+						<div class="widget-header"> 
+							<i class="icon-book"></i>
+							<h3>
+								{{ categorie.name }}
+							</h3>
+							<span ng-if="categorie.id">
+								<input type="submit" class="btn btn-default" value="Save">
+                                <a href="#delete" role="button" class="btn btn-default" data-toggle="modal" onclick="$('#delete').modal('show'); ">Delete</a>
+							</span>
+						</div>
+						<!-- end widget head -->
+
+						<div class="widget-content">
+                            <input type="hidden" value="{{categorie.id}}" id="id" required name="id"/>
+                            <label for="name" style="display:block;float:left;width:100px;position:relative;top:4px;">Titre : </label>
+                            <input type="text" ng-model="categorie.name" id="name" required name="title"/><br/>
+
+                            <label for="position" style="display:block;float:left; width:100px;position:relative;top:4px;">Position : </label>
+                            <input type="number" ng-model="categorie.position" id="position" required name="position"/><br/>
+
+                                <div ng-cloak ng-show="categorie.categories.length==0 && !isReady" class="highlight">
+                                    Initialising ...
+                                </div>
+
+                                <div ng-cloak ng-show="isReady && categorie.categories.length==0">
+                                    <textarea ckeditor="editorOptions" name="content" ng-model="categorie.content"></textarea>
+                                </div>
+
+                                <div ng-if="categorie.categories.length>0">
+                                    <ul ng-repeat="categorie2 in categorie.categories" style="margin: 4.5px 0 4.5px 0;">
+                                        <a class="categorie"><li ng-click="getCategorie(categorie2.id);">{{categorie2.name}}</li></a>
+                                        <ul ng-repeat="categorie3 in categorie2.categories">
+                                            <a class="categorie"><li ng-click="getCategorie(categorie3.id);">{{categorie3.name}}</li></a>
+                                        </ul>
+                                    </ul>
+
+                                </div>
+						</div>
+						<!-- end widget content -->
+                    </form>
+                    <div id="delete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Delete category</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="control-group">
+                                <label class="control-label" for="name">{{ categorie.name }}</label>
+                                <div class="controls">
+                                    <p> Are you sure to delete this category (and this subcategory) ?
+                                </div> <!-- /controls -->
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" ng-click="deleteCategory(categorie.id);">Delete</button>
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+				</div>
+					<!-- end widget -->
+			</div>
+				<!-- end span 5 -->
+		</div>
+	</div>
+</div>
 	</body>
 </html>

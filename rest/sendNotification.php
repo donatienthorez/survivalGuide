@@ -2,8 +2,8 @@
 	session_start();
 
 	include '../includes/database/Database.php';
-	include 'includes/entities/Pushes.php';
-	include 'includes/entities/RegId.php';
+	include '../includes/entities/Pushes.php';
+	include '../includes/entities/RegId.php';
 	include '../includes/model/NotificationModel.php';
 
 	
