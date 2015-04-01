@@ -12,6 +12,7 @@ Comment faire fonctionner le projet sur votre machine :
 
 * Renseignez vos paramètres de base de données dans le fichier includes/database/config.xml (compléter host,user,pass,port et db)
 * Mettez à jour votre base de données avec les fichiers du dossier SQL
+* Installer les dépendances avec bower
 
 ## Installing via Bower
 ```
