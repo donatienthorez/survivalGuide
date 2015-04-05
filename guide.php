@@ -85,7 +85,7 @@ include 'includes/connection/session.php';
 							</h3>
 							<span ng-if="categorie.id">
 								<input type="submit" class="btn btn-default" value="Save">
-                                <a href="#delete" role="button" class="btn btn-default" data-toggle="modal" onclick="$('#delete').modal('show'); ">Delete</a>
+                                <a href="#delete" role="button" class="btn btn-default" data-toggle="modal">Delete</a>
 							</span>
 						</div>
 						<!-- end widget head -->
