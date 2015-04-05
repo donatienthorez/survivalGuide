@@ -12,13 +12,12 @@ class CategoryModel{
         $this->connexion=$database->connexion;
     }
 
-    public function addCategory($parent,$category,$position)
+    public function addCategory($parent,$name,$code_section)
     {
 		try{
-			$stmt = $this->connexion->prepare("INSERT INTO survival_guide_categories(name,content,code_section) VALUES (:name,:content,:code_section)");
-			$stmt->bindParam(':name',$category->name);
-			$stmt->bindParam(':content',$category->content);
-			$stmt->bindParam(':code_section',$category->section);
+			$stmt = $this->connexion->prepare("INSERT INTO survival_guide_categories(name,code_section) VALUES (:name,:code_section)");
+			$stmt->bindParam(':name',$name);
+			$stmt->bindParam(':code_section',$code_section);
 			$stmt->execute();
 			
 			$id = $this->connexion->lastInsertId();
@@ -31,7 +30,6 @@ class CategoryModel{
 			}
 			else 
 			{
-				
 				$stmt = $this->connexion->prepare("SELECT * from survival_guide_relation WHERE idCategorie=:id");
 				$stmt->bindParam(':id',$parent);
 				$stmt->execute();
@@ -56,17 +54,13 @@ class CategoryModel{
 					{
 						throw new Exception('The category you want to add are too deep');
 					}
-					$this->updateContentCategories($data->idCategorie,'',$category->section);
 				}
 				else
 				{
 					throw new Exception('The parent category doesn\' exist');
 				}
-				
 			}
-			
-			
-
+            $position = 0;
 			$stmt = $this->connexion->prepare("INSERT INTO survival_guide_relation(idCategorie,partie,chapitre,position) VALUES (:id,:partie,:chapitre,:position)");
 			$stmt->bindParam(':id',$id);
 			$stmt->bindParam(':partie',$partie);
@@ -74,13 +68,12 @@ class CategoryModel{
 			$stmt->bindParam(':position',$position);
 			$stmt->execute();
 			
-			
 		}
         catch (Exception $e)
         {
             if($id!=0)
             {
-				$this->deleteCategory($id);
+				$this->deleteCategory($id,$code_section);
 			}
             die('Erreur : ' . $e->getMessage());
         }

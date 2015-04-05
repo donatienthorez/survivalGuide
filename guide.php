@@ -137,6 +137,40 @@ include 'includes/connection/session.php';
                             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                         </div>
                     </div>
+
+                    <div id="Add" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <form name="form" method="post" action="addCategory.php">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="myModalLabel">Add category</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="control-group">
+                                    <label class="control-label" for="name">Title</label>
+                                    <div class="controls">
+                                        <input type="text" class="span5" id="title" name="title">
+                                    </div> <!-- /controls -->
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="Parent">Parent</label>
+                                    <div class="controls">
+                                        <select ng-model="parent" id="parent" name="parent">
+                                            <option value="">-- Root --</option>
+                                            <option ng-repeat="categorie in categories" value="{{categorie.id}}"> {{ categorie.name }}</option>
+                                            <optgroup ng-if="categorie.categories.length" ng-repeat="categorie in categories" label="{{ categorie.name }}">
+                                                <option ng-repeat="categorie2 in categorie.categories" value="{{categorie2.id}}">{{ categorie2.name }}</option>
+                                            </optgroup>
+                                        </select><br/>
+                                    </div> <!-- /controls -->
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="Add">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
 				</div>
 					<!-- end widget -->
 			</div>
