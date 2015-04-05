@@ -87,7 +87,7 @@ $notifications = $ns->getLastNotifications($_SESSION['code_section']);
 						</div>
 						<div class="widget-content">
 							<ul class="news-items">
-								<?php 
+								<?php
 
 								foreach($notifications as &$notification)
 								{
@@ -102,12 +102,16 @@ $notifications = $ns->getLastNotifications($_SESSION['code_section']);
 									</div>
                   							<div class=\"news-item-detail\">
 										<span class=\"news-item-title\">" . $notification->subject . "</span>
-								                <p class=\"news-item-preview\">" . $notification->message . "message</p>
+								                <p class=\"news-item-preview\">" . $notification->message . "</p>
                   							</div>
                 						</li>";
 								}
-								?>
-                						
+
+
+                                if(sizeof($notifications)==0){
+                                    echo "There is no notifications yet.";
+                                }
+                						?>
               						</ul>
 						</div>
 					</div>

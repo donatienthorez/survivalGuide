@@ -24,6 +24,22 @@ class NotificationModel{
 		}
 	}
 
+	public function saveNotification($subject,$message,$code_section)
+	{
+		try{
+			
+			$stmt = $this->connexion->prepare("INSERT INTO survival_guide_pushes(subject,message,code_section) VALUES(:subject, :message, :code_section)");
+			$stmt->bindParam(':subject',$subject);
+			$stmt->bindParam(':message',$message);
+			$stmt->bindParam(':code_section',$code_section);
+			$stmt->execute();
+		}
+		catch (Exception $e)
+		{
+		    die('Erreur : ' . $e->getMessage());
+		}
+	}
+
 
 	public function addRegId($regId)
 	{
@@ -31,7 +47,6 @@ class NotificationModel{
 			$stmt = $this->connexion->prepare("SELECT * FROM survival_guide_regids WHERE regid = :regid");
 			$stmt->bindParam(':regid',$regId->regid);
 			$stmt->execute();
-		
 			$data=$stmt->fetch(PDO::FETCH_OBJ);
 
 			if($data)
