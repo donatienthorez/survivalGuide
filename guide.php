@@ -80,9 +80,8 @@ include 'includes/connection/session.php';
 					<form name="form" method="post" action="saveCategory.php">
 						<div class="widget-header"> 
 							<i class="icon-book"></i>
-							<h3>
-								{{ categorie.name }}
-							</h3>
+							<h3 ng-if="categorie.id"> {{ categorie.name }} </h3>
+                            <h3 ng-if="!categorie.id"> Welcome to the survival guide tool</h3>
 							<span ng-if="categorie.id">
 								<input type="submit" class="btn btn-default" value="Save">
                                 <a href="#delete" role="button" class="btn btn-default" data-toggle="modal">Delete</a>
@@ -91,29 +90,34 @@ include 'includes/connection/session.php';
 						<!-- end widget head -->
 
 						<div class="widget-content">
-                            <input type="hidden" value="{{categorie.id}}" id="id" required name="id"/>
-                            <label for="name" style="display:block;float:left;width:100px;position:relative;top:4px;">Titre : </label>
-                            <input type="text" ng-model="categorie.name" id="name" required name="title"/><br/>
 
-                            <label for="position" style="display:block;float:left; width:100px;position:relative;top:4px;">Position : </label>
-                            <input type="number" ng-model="categorie.position" id="position" required name="position"/><br/>
+                                <div ng-if="categorie.id">
+                                    <input type="hidden" value="{{categorie.id}}" id="id" required name="id"/>
+                                    <label for="name"  style="display:block;float:left;width:100px;position:relative;top:4px;">Titre : </label>
+                                    <input type="text" ng-model="categorie.name" id="name" required name="title"/><br/>
 
-                                <div ng-cloak ng-show="categorie.categories.length==0 && !isReady" class="highlight">
-                                    Initialising ...
+                                    <label for="position" style="display:block;float:left; width:100px;position:relative;top:4px;">Position : </label>
+                                    <input type="number" ng-model="categorie.position" id="position" required name="position"/><br/>
                                 </div>
+                                    <div ng-cloak ng-show="categorie.categories.length==0 && !isReady" class="highlight">
+                                        Initialising ...
+                                    </div>
+                                    <div ng-cloak ng-show="isReady && categorie.categories.length==0">
 
-                                <div ng-cloak ng-show="isReady && categorie.categories.length==0">
-                                    <textarea ckeditor="editorOptions" name="content" ng-model="categorie.content"></textarea>
-                                </div>
+                                        <textarea ckeditor="editorOptions" name="content" ng-model="categorie.content"></textarea>
+                                    </div>
 
-                                <div ng-if="categorie.categories.length>0">
-                                    <ul ng-repeat="categorie2 in categorie.categories" style="margin: 4.5px 0 4.5px 0;">
-                                        <a class="categorie"><li ng-click="getCategorie(categorie2.id);">{{categorie2.name}}</li></a>
-                                        <ul ng-repeat="categorie3 in categorie2.categories">
-                                            <a class="categorie"><li ng-click="getCategorie(categorie3.id);">{{categorie3.name}}</li></a>
+                                    <div ng-if="categorie.categories.length>0">
+                                        <ul ng-repeat="categorie2 in categorie.categories" style="margin: 4.5px 0 4.5px 0;">
+                                            <a class="categorie"><li ng-click="getCategorie(categorie2.id);">{{categorie2.name}}</li></a>
+                                            <ul ng-repeat="categorie3 in categorie2.categories">
+                                                <a class="categorie"><li ng-click="getCategorie(categorie3.id);">{{categorie3.name}}</li></a>
+                                            </ul>
                                         </ul>
-                                    </ul>
+                                    </div>
 
+                                <div ng-if="!categorie.id">
+                                    <p>Welcome, </p><p> You survival guide is empty. </p><p> You can fill it by clicking on "Add Category"</p>
                                 </div>
 						</div>
 						<!-- end widget content -->

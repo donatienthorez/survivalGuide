@@ -14,7 +14,9 @@ myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
         $scope.categories = resp.categories;
         
         // on selectionne le premier
-        $scope.getCategorie($scope.categories[0].id);
+        if($scope.categories.length>0) {
+            $scope.getCategorie($scope.categories[0].id);
+        }
     });
     
     $scope.$on("ckeditor.ready", function( event ) {
