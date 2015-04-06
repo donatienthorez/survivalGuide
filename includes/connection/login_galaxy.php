@@ -2,6 +2,9 @@
 
 	include 'session.php';
 	include 'CAS.php';
+	include '../database/Database.php';
+	include '../entities/Member.php';
+	include '../model/MemberModel.php';
 
 	// Enable debugging
 	phpCAS::setDebug();
@@ -26,6 +29,10 @@
 		$attributes = phpCAS::getAttributes();
 		$_SESSION['code_section']=$attributes['sc'];
 
+	        $db = new Database("../database/config.xml");
+	        $ms = new MemberModel($db);
+	        $ms->addMember(new Member($_SESSION['username'],$attributes['mail'],$_SESSION['code_section'],"member"));
+	        $_SESSION['role'] = $ms->getRole($_SESSION['username']);
 		header('Location: /guide.php');
 	}
 

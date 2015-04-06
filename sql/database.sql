@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `survival_guide_categories` (
   `name` varchar(250) CHARACTER SET utf8 NOT NULL,
   `content` text CHARACTER SET utf8 NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `code_section` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `code_section` varchar(11) NOT NULL,
   PRIMARY KEY (`idCategorie`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
@@ -32,7 +32,7 @@ ALTER TABLE `survival_guide_relation`
   ADD CONSTRAINT `survival_guide_relation_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `survival_guide_categories` (`idCategorie`);
 
 --
--- Table structure for table `survival_guide_regids`
+-- Table structure for table `survival_guide_pushes`
 --
 
 CREATE TABLE IF NOT EXISTS `survival_guide_pushes` (
@@ -56,3 +56,16 @@ CREATE TABLE IF NOT EXISTS `survival_guide_regids` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`regid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `members`
+--
+
+CREATE TABLE IF NOT EXISTS `survival_guide_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(250) NOT NULL,
+  `mail` varchar(250) NOT NULL,
+  `code_section` varchar(11) NOT NULL,
+  `role` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
