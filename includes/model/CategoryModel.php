@@ -80,7 +80,7 @@ class CategoryModel{
 				return;
 			}			
 
-			$stmt = $this->connexion->prepare("SELECT idCategorie from survival_guide_relation WHERE relation.partie=:id OR relation.chapitre=:id");
+			$stmt = $this->connexion->prepare("SELECT idCategorie from survival_guide_relation WHERE partie=:id OR chapitre=:id");
             $stmt->bindParam(':id',$id);
             $stmt->execute();
 
