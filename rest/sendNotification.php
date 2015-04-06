@@ -10,11 +10,9 @@
 	$db = new Database("../database/config.xml");
 	$ns = new NotificationModel($db);
 
-	//TEST POUR LE PUSH DEPUIS LA CREATION D'EVENT SUR LE SAT
-
-	if (isset($_POST)){
+	if (isset($_POST)) {
 		$string = implode(',', $_POST);
-	    	$objet = explode(',', $string);
+	    $objet = explode(',', $string);
 
 		$code_section = $objet[0];
 		$subject = $objet[1];
@@ -25,10 +23,7 @@
 
 		if(isset($regIds))
 		{
-			echo "subject :" . $subject . "\n";
-			echo "msg : " . $message . "\n" ;
 			$pushStatus = $ns->sendMessageThroughGCM($regIds,$subject,$message);
 			echo "Notification envoyée" . "\n" ;
 		}
 	}
-

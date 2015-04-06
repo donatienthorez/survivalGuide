@@ -2,14 +2,12 @@
 	session_start();
 	
 	// On redirige vers guide si la personne est deja connecte 
-	if(isset($_SESSION['username']) && isset($_SESSION['code_section']))
-	{
+	if(isset($_SESSION['username']) && isset($_SESSION['code_section'])) {
 		header('Location: /guide.php');
 	}
 ?>
 <html>
 	<head>
-
 		<title>ESN - Survival Guide</title>
 
 		<meta charset="utf-8">
@@ -26,7 +24,7 @@
 		<link href="css/style.css" rel="stylesheet">
 
 		<script src="js/jquery-1.7.2.min.js"></script>      
-		
+
 		<script type="text/javascript">
 			function animateToValue(value, id_layout) {
 				$({someValue: 0}).animate({someValue: value}, {
@@ -54,7 +52,6 @@
 	<body>
 		<?php include 'includes/partials/navbar.php'; ?>
 
-
 		<div class="account-container"  style="width:700px;">
 			<div class="content clearfix">
 				<h1 style="text-align:center;">Welcome </h1><br/>
@@ -67,7 +64,7 @@
 				</center>
 			</div>
 		</div>
-	
+
 		<div class="account-container" style="width:700px;">
 			<div class="content clearfix">
 				<h3 style="text-align:center">Send notifications to your Erasmus students and write a survival guide for them.</h3><br/>

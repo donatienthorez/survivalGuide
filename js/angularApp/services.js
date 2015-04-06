@@ -1,4 +1,5 @@
 "use strict";
+
 myAdminApp.service("Categories",function ($http) {
    return {
         fetch : function() {

@@ -19,16 +19,16 @@
 	$user = phpCAS::getUser();
 
 
-	if (isset($user)){
+	if (isset($user)) {
 
-		
 		$_SESSION['username'] = phpCAS::getUser();
 		$_SESSION['cas'] = true;
 		$attributes = phpCAS::getAttributes();
 		$_SESSION['code_section']=$attributes['sc'];
+
 		header('Location: /guide.php');
 	}
 
 	?>
 
-Connecting ...
+

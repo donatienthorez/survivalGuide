@@ -1,10 +1,8 @@
 <?php
 	session_start();
 	
-	ini_set('display_errors', 1);
-	
 	// Annule les magic quotes si activées
-	if(get_magic_quotes_gpc()){
+	if(get_magic_quotes_gpc()) {
 		function stripslashes_deep($value) {
 			return (is_array($value)) ? array_map('stripslashes_deep', $value) : stripslashes($value);
 		}
@@ -13,9 +11,7 @@
 		$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
 	}	
 
-	if(!isset($_SESSION['username']) || !isset($_SESSION['code_section']))
-	{
+	if(!isset($_SESSION['username']) || !isset($_SESSION['code_section'])) {
 		header('Location: index.php');
 	}
-?>
 	

@@ -87,32 +87,32 @@ $notifications = $ns->getLastNotifications($_SESSION['code_section']);
 						</div>
 						<div class="widget-content">
 							<ul class="news-items">
-								<?php
+                                <?php
 
-								foreach($notifications as &$notification)
-								{
-									$date = explode(" ", $notification->date);
-									$date2 = explode("-", $date[0]);
+                                foreach($notifications as &$notification)
+                                {
+                                    $date = explode(" ", $notification->date);
+                                    $date2 = explode("-", $date[0]);
 
-									
-								echo "<li>
-									<div class=\"news-item-date\"> 
-										<span class=\"news-item-month\">" . $date2[2] . "/" . $date2[1] .  "</span>
-										<span class=\"news-item-month\">" . $date[1] . "</span>
-									</div>
-                  							<div class=\"news-item-detail\">
-										<span class=\"news-item-title\">" . $notification->subject . "</span>
-								                <p class=\"news-item-preview\">" . $notification->message . "</p>
-                  							</div>
-                						</li>";
-								}
+
+                                echo "<li>
+                                    <div class=\"news-item-date\">
+                                        <span class=\"news-item-month\">" . $date2[2] . "/" . $date2[1] .  "</span>
+                                        <span class=\"news-item-month\">" . $date[1] . "</span>
+                                    </div>
+                                            <div class=\"news-item-detail\">
+                                        <span class=\"news-item-title\">" . $notification->subject . "</span>
+                                                <p class=\"news-item-preview\">" . $notification->message . "</p>
+                                            </div>
+                                        </li>";
+                                }
 
 
                                 if(sizeof($notifications)==0){
                                     echo "There is no notifications yet.";
                                 }
-                						?>
-              						</ul>
+                                        ?>
+                            </ul>
 						</div>
 					</div>
 				</div>

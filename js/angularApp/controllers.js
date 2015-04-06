@@ -1,11 +1,11 @@
 "use strict";
+
 myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
 
     $scope.categories=[];
     $scope.categorie="";
-     $scope.editorOptions = {
+    $scope.editorOptions = {
                 language: 'en'
-               // uiColor: '#000000'
             };
      
     Categories.fetch().success(function(resp){
@@ -61,19 +61,14 @@ myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
             window.location.reload();
         });
     }
-     
+
     $scope.isInteger = function(integer) {
-	 if(isNaN(integer))
-	 {
+	 if(isNaN(integer)) {
 	 	return false;
 	 }
-	 else
-	 {
+	 else {
 		return true;
 	 }
     }
-	 
-     
-		 
 });
 

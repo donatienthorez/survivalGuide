@@ -6,28 +6,26 @@ class NotificationModel{
 	private $connexion;
 
 	public function NotificationModel($database)
-	{
-	$this->database=$database;
-	$this->connexion=$database->connexion;
+    {
+        $this->database=$database;
+        $this->connexion=$database->connexion;
 	}
 
 	public function countNotification()
 	{
-		try{
-				$stmt = $this->connexion->prepare("SELECT * FROM survival_guide_pushes");
-				$stmt->execute();
-				return $stmt->rowcount();
+		try {
+            $stmt = $this->connexion->prepare("SELECT * FROM survival_guide_pushes");
+            $stmt->execute();
+            return $stmt->rowcount();
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 		    die('Erreur : ' . $e->getMessage());
 		}
 	}
 
 	public function saveNotification($subject,$message,$code_section)
 	{
-		try{
-			
+		try {
 			$stmt = $this->connexion->prepare("INSERT INTO survival_guide_pushes(subject,message,code_section) VALUES(:subject, :message, :code_section)");
 			$stmt->bindParam(':subject',$subject);
 			$stmt->bindParam(':message',$message);
@@ -40,24 +38,20 @@ class NotificationModel{
 		}
 	}
 
-
 	public function addRegId($regId)
 	{
-		try{
-			$stmt = $this->connexion->prepare("SELECT * FROM survival_guide_regids WHERE regid = :regid");
+		try {
+            $stmt = $this->connexion->prepare("SELECT * FROM survival_guide_regids WHERE regid = :regid");
 			$stmt->bindParam(':regid',$regId->regid);
 			$stmt->execute();
 			$data=$stmt->fetch(PDO::FETCH_OBJ);
 
-			if($data)
-			{
-					$stmt = $this->connexion->prepare("UPDATE survival_guide_regids SET code_section =:code_section WHERE regid =:regid");
-					$stmt->bindParam(':regid',$regId->regid);
-					$stmt->bindParam(':code_section',$regId->code_section);
-					$stmt->execute();
-			}
-			else
-			{
+			if($data) {
+                $stmt = $this->connexion->prepare("UPDATE survival_guide_regids SET code_section =:code_section WHERE regid =:regid");
+                $stmt->bindParam(':regid',$regId->regid);
+                $stmt->bindParam(':code_section',$regId->code_section);
+                $stmt->execute();
+			} else {
 				$stmt = $this->connexion->prepare("INSERT INTO survival_guide_regids(regid,code_section) VALUES(:regid,:code_section)");
 				$stmt->bindParam(':regid',$regId->regid);
 				$stmt->bindParam(':code_section',$regId->code_section);
@@ -72,32 +66,28 @@ class NotificationModel{
 
 	public function getLastNotifications($code_section)
 	{
-		try
-		{
+		try {
 			$stmt = $this->connexion->prepare("SELECT * FROM survival_guide_pushes WHERE code_section = :code_section order by timestamp desc LIMIT 5");
 			$stmt->bindParam(':code_section',$code_section);
 			$stmt->execute();
-		
-			$notifications = array();
-		
-			while($data=$stmt->fetch(PDO::FETCH_OBJ))
-		    	{
-				$newNotif = new Pushes($data->subject,$data->message,$data->code_section,$data->timestamp);
-				array_push($notifications,$newNotif);	
 
+			$notifications = array();
+
+			while($data=$stmt->fetch(PDO::FETCH_OBJ))
+		    {
+                $newNotif = new Pushes($data->subject,$data->message,$data->code_section,$data->timestamp);
+                array_push($notifications,$newNotif);
 			}
 			return $notifications;
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 		    die('Erreur : ' . $e->getMessage());
 		}
 	}
-	
+
 	public function getRegIds($code_section)
 	{
-		try
-		{
+		try {
 			$stmt = $this->connexion->prepare("SELECT regid FROM survival_guide_regids WHERE code_section = :code_section");
 			$stmt->bindParam(':code_section',$code_section);
 			$stmt->execute();
@@ -105,17 +95,15 @@ class NotificationModel{
 			$ids = array();
 		
 			while($data=$stmt->fetch(PDO::FETCH_OBJ))
-		    	{
-				array_push($ids,$data->regid);	
+		    {
+                array_push($ids,$data->regid);
 			}
 			return $ids;
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 		    die('Erreur : ' . $e->getMessage());
 		}
 	}
-
 
 	public function sendMessageThroughGCM($registration_ids, $subject, $pushMessage) {
 	
