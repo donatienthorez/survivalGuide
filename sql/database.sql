@@ -69,3 +69,13 @@ CREATE TABLE IF NOT EXISTS `survival_guide_members` (
   `role` varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `guide`
+--
+
+CREATE TABLE IF NOT EXISTS `survival_guide_guide` (
+  `code_section` varchar(11) NOT NULL,
+  `status` varchar(3) NOT NULL,
+  PRIMARY KEY (`code_section`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

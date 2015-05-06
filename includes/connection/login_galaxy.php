@@ -1,10 +1,12 @@
 <?php
 
-	include 'session.php';
+//	include 'session.php';
 	include 'CAS.php';
 	include '../database/Database.php';
 	include '../entities/Member.php';
-	include '../model/MemberModel.php';
+    include '../entities/Guide.php';
+    include '../model/MemberModel.php';
+    include '../model/GuideModel.php';
 
 	// Enable debugging
 	phpCAS::setDebug();
@@ -21,7 +23,6 @@
 
 	$user = phpCAS::getUser();
 
-
 	if (isset($user)) {
 
 		$_SESSION['username'] = phpCAS::getUser();
@@ -31,11 +32,15 @@
 
 	        $db = new Database("../database/config.xml");
 	        $ms = new MemberModel($db);
+            $gm = new GuideModel($db);
 	        $ms->addMember(new Member($_SESSION['username'],$attributes['mail'],$_SESSION['code_section'],"member"));
 	        $_SESSION['role'] = $ms->getRole($_SESSION['username']);
+
+            if($gm->getGuide($_SESSION['code_section']) == null)
+            {
+                $gm->addGuide(new Guide($_SESSION['code_section']));
+            }
 		header('Location: /guide.php');
 	}
-
-	?>
 
 

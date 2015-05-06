@@ -5,8 +5,10 @@ myAdminApp.service("Categories",function ($http) {
         fetch : function() {
             return $http.get("/rest/getCategories.php");
         },
+       changeStatus : function(status){
+            return $http.get("/rest/changeStatusGuide.php", {params: {status: status}});
+       },
        del : function(id) {
-           console.log(id);
            return $http.get("/rest/deleteCategory.php", {params: {id: id}});
        }
     };

@@ -18,7 +18,18 @@ myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
             $scope.getCategorie($scope.categories[0].id);
         }
     });
-    
+
+    $scope.changeGuideStatus = function (confirmed)
+    {
+        if(confirmed){
+            Categories.changeStatus('ON').success(function(){});
+        }
+        else
+        {
+            Categories.changeStatus('OFF').success(function(){});
+        }
+    }
+
     $scope.$on("ckeditor.ready", function( event ) {
                 $scope.isReady = true;
             });

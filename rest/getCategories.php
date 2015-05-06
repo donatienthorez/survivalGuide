@@ -5,13 +5,23 @@
 	include '../includes/database/Database.php';
 	include '../includes/entities/Category.php';
 	include '../includes/model/CategoryModel.php';
+    include '../includes/entities/Guide.php';
+    include '../includes/model/GuideModel.php';
 
-	if(isset($_SESSION['username']) && (isset($_SESSION['code_section']) || isset($_GET['code_section']))) {
-		$db = new Database("../includes/database/config.xml");
-		$cs = new CategoryModel($db);
+    $db = new Database("../includes/database/config.xml");
+    $cs = new CategoryModel($db);
+    $gm = new GuideModel($db);
 
-        (isset($_GET['code_section'])) ? $array = $cs->getCategories($_GET['code_section']) : $array = $cs->getCategories($_SESSION['code_section']);
+    $code_section = (isset($_GET['code_section'])) ?  $_GET['code_section'] : $_SESSION['code_section'];
 
-		$json = json_encode($array);
-		echo $json;
-	}
+	if((isset($_GET['code_section']) && $gm->isActivated($code_section)) ||  (isset($_SESSION['username']) && isset($_SESSION['code_section']))) {
+        $array = $cs->getCategories($code_section);
+    }
+    else
+    {
+        $array=array();
+        $array['categories'] = $array;
+    }
+
+    $json = json_encode($array);
+    echo $json;

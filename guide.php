@@ -22,6 +22,7 @@ include 'includes/connection/session.php';
 		<link href="css/pages/dashboard.css" rel="stylesheet">
 
 		<link href="css/style.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
 
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="js/jquery-1.7.2.min.js"></script>
@@ -60,6 +61,15 @@ include 'includes/connection/session.php';
                             <span>
                                 <a href="#Add" role="button" data-toggle="modal" style="margin-bottom : 15px;">
                                 <button type="button" class="btn btn-default">Add Category</button></a>
+                            </span>
+                            <span>
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="confirmed" ng-change="changeGuideStatus(confirmed)" checked>
+                                    <label class="onoffswitch-label" for="myonoffswitch">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
                             </span>
                         </div>
                         <div class="widget-content">
