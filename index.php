@@ -5,6 +5,18 @@
 	if(isset($_SESSION['username']) && isset($_SESSION['code_section'])) {
 		header('Location: /guide.php');
 	}
+
+    include 'includes/database/Database.php';
+    include 'includes/model/NotificationModel.php';
+    include 'includes/model/GuideModel.php';
+
+    $db = new Database("includes/database/config.xml");
+    $ns = new NotificationModel($db);
+    $gm = new GuideModel($db);
+
+    $nb_notifications = $ns->countNotification();
+    $nb_guides = $gm->countGuide();
+    $nb_users = $ns->countRegIds();
 ?>
 <html>
 	<head>
@@ -36,9 +48,9 @@
 					}
 				});
 			}
-			animateToValue(3, "layout_guides");
-			animateToValue(25, "layout_users");
-			animateToValue(74, "layout_notifications");
+			animateToValue(<?php echo $nb_notifications; ?>, "layout_guides");
+			animateToValue(<?php echo $nb_users; ?>, "layout_users");
+			animateToValue(<?php echo $nb_guides; ?>, "layout_notifications");
 
 			function commaSeparateNumber(val) {
 				while (/(\d+)(\d{3})/.test(val.toString())) {

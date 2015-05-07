@@ -85,7 +85,20 @@ class NotificationModel{
 		}
 	}
 
-	public function getRegIds($code_section)
+    public function countRegIds()
+    {
+        try {
+            $stmt = $this->connexion->prepare("SELECT * FROM survival_guide_regids");
+            $stmt->execute();
+            return $stmt->rowcount();
+        }
+        catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+
+
+    public function getRegIds($code_section)
 	{
 		try {
 			$stmt = $this->connexion->prepare("SELECT regid FROM survival_guide_regids WHERE code_section = :code_section");

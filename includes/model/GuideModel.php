@@ -25,6 +25,18 @@ class GuideModel
         }
     }
 
+    public function countGuide()
+    {
+        try {
+            $stmt = $this->connexion->prepare("SELECT * FROM survival_guide_guide");
+            $stmt->execute();
+            return $stmt->rowcount();
+        }
+        catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+
     public function updateGuide($guide)
     {
         try {

@@ -15,8 +15,6 @@ class MemberModel
     public function addMember($member)
     {
         try {
-
-
             $stmt = $this->connexion->prepare("SELECT * FROM survival_guide_members WHERE username = :username");
             $stmt->bindParam(':username',$member->username);
             $stmt->execute();
