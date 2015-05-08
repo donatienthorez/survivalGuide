@@ -10,6 +10,9 @@ myAdminApp.service("Categories",function ($http) {
        },
        del : function(id) {
            return $http.get("/rest/deleteCategory.php", {params: {id: id}});
+       },
+       isActivate : function() {
+           return $http.get("/rest/isGuideActivated.php");
        }
     };
 });

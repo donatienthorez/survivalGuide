@@ -7,6 +7,10 @@ class Member
     public $code_section;
     public $role;
 
+    const ROLE_MEMBER = 'member';
+    const ROLE_ADMIN = 'admin';
+
+
     function Member($username, $mail, $code_section, $role)
     {
         $this->username = $username;

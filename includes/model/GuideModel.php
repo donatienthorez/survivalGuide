@@ -60,12 +60,29 @@ class GuideModel
             $data=$stmt->fetch(PDO::FETCH_OBJ);
 
             if($data) {
-                return new Guide($data->code_section);
+                return new Guide($data->code_section,$data->status);
             }
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
         }
         return null;
+    }
+
+    public function getSections()
+    {
+        try {
+            $stmt = $this->connexion->prepare("SELECT * from survival_guide_guide");
+            $stmt->execute();
+
+            $sections = array();
+
+            while ($data = $stmt->fetch(PDO::FETCH_OBJ)) {
+                array_push($sections, $data->code_section);
+            }
+        } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+        return $sections;
     }
 
     public function isActivated($code_section)

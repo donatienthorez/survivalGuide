@@ -1,5 +1,23 @@
 <?php
 include 'includes/connection/session.php';
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
+include 'includes/database/Database.php';
+include 'includes/entities/Member.php';
+include 'includes/model/MemberModel.php';
+include 'includes/entities/Guide.php';
+include 'includes/model/GuideModel.php';
+$db = new Database("includes/database/config.xml");
+$ms = new MemberModel($db);
+$gm = new GuideModel($db);
+
+if(isset($_POST['code_section']) && ($ms->getRole($_SESSION['username'])==Member::ROLE_ADMIN))
+{
+    $_SESSION['code_section']=$_POST['code_section'];
+}
+
 ?>
 <html ng-app="myAdminApp" xmlns="http://www.w3.org/1999/html">
 	<head>
@@ -64,7 +82,7 @@ include 'includes/connection/session.php';
                             </span>
                             <span>
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="confirmed" ng-change="changeGuideStatus(confirmed)" checked>
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="guideActivate" ng-change="changeGuideStatus(confirmed)">
                                     <label class="onoffswitch-label" for="myonoffswitch">
                                         <span class="onoffswitch-inner"></span>
                                         <span class="onoffswitch-switch"></span>
@@ -73,6 +91,21 @@ include 'includes/connection/session.php';
                             </span>
                         </div>
                         <div class="widget-content">
+                            <?php if ($ms->getRole($_SESSION['username'])==Member::ROLE_ADMIN){
+                                ?>
+                                <form action="guide.php" method="POST">
+                                    <select id="ListeElement" name="code_section">
+                                        <?php foreach ($gm->getSections() as $value){
+                                            if($value==$_SESSION['code_section']){
+                                                echo "<option value=" . $value . " selected>" . $value . "</option>";}
+                                            else
+                                            {
+                                                echo "<option value=" . $value . ">" . $value . "</option>";}
+                                        }?>
+                                    </select>
+                                    <input type="submit" value="Change my section">
+                                </form>
+                            <?php }?>
                             <ul ng-repeat="categorie in categories | orderBy:'+position'">
                                 <a class="categorie"><li ng-click="getCategorie(categorie.id);">{{categorie.name}}</li></a>
                                 <ul ng-repeat="categorie2 in categorie.categories | orderBy:'+position'">

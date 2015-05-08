@@ -29,4 +29,9 @@ class Guide{
     {
         $this->status = self::STATUS_OFF;
     }
+
+    public function isActivated()
+    {
+        return $this->status==self::STATUS_ON;
+    }
 }

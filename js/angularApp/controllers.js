@@ -7,6 +7,7 @@ myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
     $scope.editorOptions = {
                 language: 'en'
             };
+    $scope.guideActivate = "";
      
     Categories.fetch().success(function(resp){
         
@@ -19,9 +20,14 @@ myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
         }
     });
 
-    $scope.changeGuideStatus = function (confirmed)
+    Categories.isActivate().success(function(resp){
+
+        $scope.guideActivate = resp.isActivated;
+    });
+
+    $scope.changeGuideStatus = function (guideActivate)
     {
-        if(confirmed){
+        if(guideActivate){
             Categories.changeStatus('ON').success(function(){});
         }
         else
