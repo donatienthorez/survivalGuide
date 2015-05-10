@@ -1,14 +1,12 @@
 <?php
 include 'includes/connection/session.php';
 
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-
 include 'includes/database/Database.php';
 include 'includes/entities/Member.php';
 include 'includes/model/MemberModel.php';
 include 'includes/entities/Guide.php';
 include 'includes/model/GuideModel.php';
+
 $db = new Database("includes/database/config.xml");
 $ms = new MemberModel($db);
 $gm = new GuideModel($db);

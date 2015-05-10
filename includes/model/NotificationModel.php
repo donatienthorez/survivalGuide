@@ -118,7 +118,48 @@ class NotificationModel{
 		}
 	}
 
-	public function sendMessageThroughGCM($registration_ids, $subject, $pushMessage) {
+    public function getAllRegIds()
+    {
+        try {
+            $stmt = $this->connexion->prepare("SELECT regid FROM survival_guide_regids");
+            $stmt->execute();
+
+            $ids = array();
+
+            while($data=$stmt->fetch(PDO::FETCH_OBJ))
+            {
+                array_push($ids,$data->regid);
+            }
+            return $ids;
+        }
+        catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+
+    public function getCountryRegIds($country)
+    {
+        try {
+            $country_code = $country . "%";
+            $stmt = $this->connexion->prepare("SELECT regid FROM survival_guide_regids where code_section like :code_section");
+            $stmt->bindParam(':code_section',$country_code);
+            $stmt->execute();
+
+            $ids = array();
+
+            while($data=$stmt->fetch(PDO::FETCH_OBJ))
+            {
+                array_push($ids,$data->regid);
+            }
+            return $ids;
+        }
+        catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+
+
+    public function sendMessageThroughGCM($registration_ids, $subject, $pushMessage) {
 	
 		$message = array("m" => $pushMessage, "sbj" => $subject);
 		   		

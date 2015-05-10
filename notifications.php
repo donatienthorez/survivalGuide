@@ -2,14 +2,23 @@
 <?php 
 include 'includes/connection/session.php'; 	
 include 'includes/database/Database.php';
+include 'includes/entities/Member.php';
+include 'includes/model/MemberModel.php';
 include 'includes/entities/Pushes.php';
 include 'includes/entities/RegId.php';
 include 'includes/model/NotificationModel.php';
 
 $db = new Database("includes/database/config.xml");
+$ms = new MemberModel($db);
 $ns = new NotificationModel($db);
 
+if(isset($_POST['code_section']) && ($ms->getRole($_SESSION['username'])==Member::ROLE_ADMIN))
+{
+    $_SESSION['code_section']=$_POST['code_section'];
+}
+
 $notifications = $ns->getLastNotifications($_SESSION['code_section']);
+
 
 ?>
 	<head>
@@ -54,27 +63,42 @@ $notifications = $ns->getLastNotifications($_SESSION['code_section']);
 			<div class="container">
 				<div class="span5">
 					<div class="widget">
-						<div class="widget-header"> 
+						<div class="widget-header">
 							<i class="icon-book"></i>
 							<h3>Send a notification</h3>
 						</div>
-						<div class="widget-content">					
-							<div class="control-group">								
-								<form action="sendNotifications.php" method="post">			
-								<label class="control-label" for="subject">Subject</label>
-								<div class="controls">
-									<input type="text" class="span4" id="subject" name="subject">
-								</div> <!-- /controls -->				
-							</div>
+						<div class="widget-content">
 
-							<div class="control-group">											
-								<label class="control-label" for="message">Message</label>
-								<div class="controls">
-									<textarea type="text" class="span4" id="message" rows="10" cols="50" name="message"></textarea>
-								</div> <!-- /controls -->				
-							</div>
-					
-							<input type="submit" button class="btn btn-primary" value="Send notification">							</form>
+                                <form action="notifications.php" method="POST">
+                                <?php if ($ms->getRole($_SESSION['username'])==Member::ROLE_ADMIN){
+                                ?>
+                                    <select id="ListeSection" name="code_section">
+                                        <option value="<?php echo $_SESSION['phpCAS']['attributes']['sc']; ?>"><?php echo $_SESSION['phpCAS']['attributes']['sc']; ?></option>
+                                        <option value="FR"  <?php if($_SESSION['code_section'] == "FR"){ echo "selected";}?>>French sections</option>
+                                        <option value="ALL"  <?php if($_SESSION['code_section'] == "ALL"){ echo "selected";}?>>All the sections</option>
+                                        <option value="DEV"  <?php if($_SESSION['code_section'] == "DEV"){ echo "selected";}?>>For developpers</option>
+                                    </select>
+                                <?php } ?>
+                                    <input type="submit" value="Change my section">
+                                </form>
+
+
+                                    <form action="sendNotifications.php" method="post">
+                                <div class="control-group">
+                                    <label class="control-label" for="subject">Subject</label>
+                                    <div class="controls">
+                                        <input type="text" class="span4" id="subject" name="subject">
+                                    </div> <!-- /controls -->
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="message">Message</label>
+                                    <div class="controls">
+                                        <textarea type="text" class="span4" id="message" rows="10" cols="50" name="message"></textarea>
+                                    </div> <!-- /controls -->
+                                </div>
+                                <input type="submit" button class="btn btn-primary" value="Send notification">
+                            </form>
 						</div>
 					</div>
 				</div> <!-- /span5 -->
