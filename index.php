@@ -3,7 +3,7 @@
 	
 	// On redirige vers guide si la personne est deja connecte 
 	if(isset($_SESSION['username']) && isset($_SESSION['code_section'])) {
-		header('Location: /guide.php');
+		header('Location: guide.php');
 	}
 
     include 'includes/database/Database.php';
@@ -92,6 +92,8 @@
 				<!-- .stat -->
 				<!-- /widget-content --> 
 			</div>
+            <br>
+            <h3 style="text-align:center"> For any suggestions, remarks or bugs, please contact : <a href="mailto:webmaster@esnlille.fr">webmaster@esnlille.fr</a></h3>
 		</div>
 	</body>
 </html>

@@ -25,9 +25,9 @@ myAdminApp.controller("categoriesController" ,function ($scope, Categories) {
         $scope.guideActivate = resp.isActivated;
     });
 
-    $scope.changeGuideStatus = function (guideActivate)
+    $scope.changeGuideStatus = function ()
     {
-        if(guideActivate){
+        if($scope.guideActivate){
             Categories.changeStatus('ON').success(function(){});
         }
         else

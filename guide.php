@@ -80,7 +80,7 @@ if(isset($_POST['code_section']) && ($ms->getRole($_SESSION['username'])==Member
                             </span>
                             <span>
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="guideActivate" ng-change="changeGuideStatus(confirmed)">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" ng-model="guideActivate" ng-change="changeGuideStatus()">
                                     <label class="onoffswitch-label" for="myonoffswitch">
                                         <span class="onoffswitch-inner"></span>
                                         <span class="onoffswitch-switch"></span>

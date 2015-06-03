@@ -1,4 +1,5 @@
 <?php
+
     include 'includes/connection/session.php';
 
     include 'includes/database/Database.php';
@@ -13,4 +14,4 @@
             $cs->updateCategory($_POST['id'],utf8_decode($_POST['title']),utf8_decode($_POST['content']),$_POST['position'],$_SESSION['code_section']);
         }
     }
-    header("Location: /guide.php");
+    header("Location: guide.php");

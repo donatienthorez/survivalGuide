@@ -1,4 +1,5 @@
 <?php
+
 	session_start();
 	
 	// Annule les magic quotes si activées
@@ -12,6 +13,6 @@
 	}	
 
 	if(!isset($_SESSION['username']) || !isset($_SESSION['code_section'])) {
-		header('Location: index.php');
+		header('Location: ../../index.php');
 	}
 	

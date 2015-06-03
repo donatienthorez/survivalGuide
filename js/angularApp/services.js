@@ -1,18 +1,20 @@
 "use strict";
 
+var prefix = "";
+
 myAdminApp.service("Categories",function ($http) {
    return {
         fetch : function() {
-            return $http.get("/rest/getCategories.php");
+            return $http.get(prefix + "/rest/getCategories.php");
         },
        changeStatus : function(status){
-            return $http.get("/rest/changeStatusGuide.php", {params: {status: status}});
+            return $http.get(prefix + "/rest/changeStatusGuide.php", {params: {status: status}});
        },
        del : function(id) {
-           return $http.get("/rest/deleteCategory.php", {params: {id: id}});
+           return $http.get(prefix + "/rest/deleteCategory.php", {params: {id: id}});
        },
        isActivate : function() {
-           return $http.get("/rest/isGuideActivated.php");
+           return $http.get(prefix + "/rest/isGuideActivated.php");
        }
     };
 });

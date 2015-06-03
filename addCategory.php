@@ -1,4 +1,5 @@
 <?php
+
     include 'includes/connection/session.php';
 
     include 'includes/database/Database.php';
@@ -13,4 +14,4 @@
         }
     }
 
-    header("Location: /guide.php");
+    header("Location: guide.php");

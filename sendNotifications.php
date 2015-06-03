@@ -1,4 +1,4 @@
-<?php 
+<?php
 	
 	include 'includes/connection/session.php';
 	include 'includes/database/Database.php';
@@ -49,7 +49,7 @@
 		}
 	}
 
-	header("Location: /notifications.php");
+	header("Location: notifications.php");
 
 
 

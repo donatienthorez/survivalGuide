@@ -13,6 +13,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['code_section'])) {
         $gm = new GuideModel($db);
 
         $array = $gm->updateGuide(new Guide($_SESSION['code_section'],$_GET['status']));
+        echo "test";
     }
 }
 else
