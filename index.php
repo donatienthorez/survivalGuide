@@ -48,9 +48,9 @@
 					}
 				});
 			}
-			animateToValue(<?php echo $nb_notifications; ?>, "layout_guides");
+			animateToValue(<?php echo $nb_guides; ?>, "layout_guides");
 			animateToValue(<?php echo $nb_users; ?>, "layout_users");
-			animateToValue(<?php echo $nb_guides; ?>, "layout_notifications");
+			animateToValue(<?php echo $nb_notifications; ?>, "layout_notifications");
 
 			function commaSeparateNumber(val) {
 				while (/(\d+)(\d{3})/.test(val.toString())) {

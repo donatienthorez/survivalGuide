@@ -1,6 +1,6 @@
 "use strict";
 
-var prefix = "";
+var prefix = "/survivalGuide";
 
 myAdminApp.service("Categories",function ($http) {
    return {

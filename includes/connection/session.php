@@ -13,6 +13,6 @@
 	}	
 
 	if(!isset($_SESSION['username']) || !isset($_SESSION['code_section'])) {
-		header('Location: ../../index.php');
+		header('Location: index.php');
 	}
 	

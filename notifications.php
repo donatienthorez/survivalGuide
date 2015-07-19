@@ -1,6 +1,5 @@
 <html>
-<?php
-
+<?php 
 include 'includes/connection/session.php'; 	
 include 'includes/database/Database.php';
 include 'includes/entities/Member.php';
@@ -12,8 +11,6 @@ include 'includes/model/NotificationModel.php';
 $db = new Database("includes/database/config.xml");
 $ms = new MemberModel($db);
 $ns = new NotificationModel($db);
-$prefix = "myserver/survivalGuide";
-
 
 if(isset($_POST['code_section']) && ($ms->getRole($_SESSION['username'])==Member::ROLE_ADMIN))
 {
@@ -47,6 +44,16 @@ $notifications = $ns->getLastNotifications($_SESSION['code_section']);
 
 	      <script src="js/jquery-1.7.2.min.js"></script> 
 	      <script src="js/bootstrap.js"></script>
+	      
+	      <script type="text/javascript">
+		  $(document).ready(function() {
+
+			$( "ListeSection" ).change(function(){
+				console.log("test");
+			});
+		});
+	      </script>
+
 	</head>
 
 	<body>
@@ -88,6 +95,9 @@ $notifications = $ns->getLastNotifications($_SESSION['code_section']);
 
 
                                     <form action="sendNotifications.php" method="post">
+
+
+				<input type="hidden" value="DEV" name="code_section"/>
                                 <div class="control-group">
                                     <label class="control-label" for="subject">Subject</label>
                                     <div class="controls">

@@ -63,7 +63,7 @@ if (!defined('E_USER_DEPRECATED')) {
 /**
  * phpCAS version. accessible for the user by phpCAS::getVersion().
  */
-define('PHPCAS_VERSION', '1.3.3+');
+define('PHPCAS_VERSION', '1.3.3');
 
 /**
  * @addtogroup public
@@ -386,15 +386,6 @@ class phpCAS
             phpCAS :: error(get_class($e) . ': ' . $e->getMessage());
         }
         phpCAS :: traceEnd();
-    }
-
-    /**
-     * Answer whether or not the client or proxy has been initialized
-     *
-     * @return bool
-     */
-    public static function isInitialized () {
-        return (is_object(self::$_PHPCAS_CLIENT));
     }
 
     /** @} */
@@ -1899,4 +1890,3 @@ class phpCAS
  * @example example_advanced_saml11.php
  */
 ?>
-

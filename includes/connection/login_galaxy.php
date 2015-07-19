@@ -1,4 +1,5 @@
 <?php
+ini_set("include_path", '/home/esnlille/php:' . ini_get("include_path"));
 
     //	include 'session.php';
     include 'CAS.php';
@@ -9,10 +10,11 @@
     include '../model/GuideModel.php';
 
     // Enable debugging
-    phpCAS::setDebug();
+    phpCAS::setDebug("debug.txt");
     // Initialize phpCAS
 
     phpCAS::client(CAS_VERSION_2_0, "galaxy.esn.org", 443, "/cas");
+
 
     phpCAS::setNoCasServerValidation();
     // force CAS authentication
@@ -21,9 +23,9 @@
     // and the user's login name can be read with phpCAS::getUser().
     // logout if desired
 
-
     $user = phpCAS::getUser();
     $attributes = phpCAS::getAttributes();
+
 
     if (in_array("Local.regularBoardMember", $attributes['roles'])) {
         if (isset($user)) {
@@ -42,6 +44,7 @@
             if ($gm->getGuide($_SESSION['code_section']) == null) {
                 $gm->addGuide(new Guide($_SESSION['code_section']));
             }
+
             header("Location: ../../guide.php");
         }
     }

@@ -889,7 +889,7 @@ class CAS_Client
         if (gettype($server_hostname) != 'string')
         	throw new CAS_TypeMismatchException($server_hostname, '$server_hostname', 'string');
         if (gettype($server_port) != 'integer')
-        	throw new CAS_TypeMismatchException($server_port, '$server_port', 'integer');
+        	throw new CAS_raTypeMismatchException($server_port, '$server_port', 'integer');
         if (gettype($server_uri) != 'string')
         	throw new CAS_TypeMismatchException($server_uri, '$server_uri', 'string');
         if (gettype($changeSessionID) != 'boolean')
@@ -1380,10 +1380,6 @@ class CAS_Client
                 );
                 $res = true;
             }
-
-            // Mark the auth-check as complete to allow post-authentication
-            // callbacks to make use of phpCAS::getUser() and similar methods
-            $this->markAuthenticationCall($res);
         } else {
             if ($this->hasTicket()) {
                 switch ($this->getServerVersion()) {
@@ -1456,11 +1452,6 @@ class CAS_Client
                 // no ticket given, not authenticated
                 phpCAS::trace('no ticket found');
             }
-
-            // Mark the auth-check as complete to allow post-authentication
-            // callbacks to make use of phpCAS::getUser() and similar methods
-            $this->markAuthenticationCall($res);
-
             if ($res) {
                 // call the post-authenticate callback if registered.
                 if ($this->_postAuthenticateCallbackFunction) {
@@ -1487,6 +1478,9 @@ class CAS_Client
                 }
             }
         }
+        // Mark the auth-check as complete to allow post-authentication
+        // callbacks to make use of phpCAS::getUser() and similar methods
+        $this->markAuthenticationCall($res);
         phpCAS::traceEnd($res);
         return $res;
     }
@@ -3528,7 +3522,7 @@ class CAS_Client
         }
         if ( isset($_SERVER['HTTPS'])
             && !empty($_SERVER['HTTPS'])
-            && $_SERVER['HTTPS'] !== 'off'
+            && $_SERVER['HTTPS'] != 'off'
         ) {
             return true;
         } else {
@@ -3641,7 +3635,7 @@ class CAS_Client
         $this->printHTMLHeader($lang->getAuthenticationFailed());
         printf(
             $lang->getYouWereNotAuthenticated(), htmlentities($this->getURL()),
-            isset($_SERVER['SERVER_ADMIN']) ? $_SERVER['SERVER_ADMIN']:''
+            $_SERVER['SERVER_ADMIN']
         );
         phpCAS::trace('CAS URL: '.$cas_url);
         phpCAS::trace('Authentication failure: '.$failure);
